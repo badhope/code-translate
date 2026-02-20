@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIPHER VAULT | 密码殿堂</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cyber-dark': '#0a0e17',
+                        'cyber-blue': '#00d4ff',
+                        'cyber-purple': '#7b2cbf',
+                        'cyber-green': '#00ff88',
+                        'cyber-gold': '#ffd700',
+                        'cyber-red': '#ff3366',
+                        'glass': 'rgba(255, 255, 255, 0.03)',
+                        'glass-border': 'rgba(255, 255, 255, 0.08)'
+                    },
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                        'display': ['Orbitron', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: #0a0e17;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* 动态网格背景 */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        /* 浮动粒子 */
+        .particle {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: #00d4ff;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 15s infinite ease-in-out;
+            opacity: 0.6;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+        }
+        
+        /* 发光效果 */
+        .glow-blue {
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3), 0 0 40px rgba(0, 212, 255, 0.1);
+        }
+        
+        .glow-green {
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3), 0 0 40px rgba(0, 255, 136, 0.1);
+        }
+        
+        .glow-purple {
+            box-shadow: 0 0 20px rgba(123, 44, 191, 0.3), 0 0 40px rgba(123, 44, 191, 0.1);
+        }
+        
+        .text-glow {
+            text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+        }
+        
+        /* 玻璃态卡片 */
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(0, 212, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        /* 输入框样式 */
+        .cyber-input {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 12px;
+            color: #e0e0e0;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.3s ease;
+        }
+        
+        .cyber-input:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2), inset 0 0 20px rgba(0, 212, 255, 0.05);
+        }
+        
+        .cyber-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* 按钮样式 */
+        .cyber-btn {
+            position: relative;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(123, 44, 191, 0.2) 100%);
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            border-radius: 12px;
+            color: #00d4ff;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .cyber-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .cyber-btn:hover::before {
+            left: 100%;
+        }
+        
+        .cyber-btn:hover {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.3) 0%, rgba(123, 44, 191, 0.3) 100%);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .cyber-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* 密码类型选择器 */
+        .cipher-option {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cipher-option:hover {
+            border-color: rgba(0, 212, 255, 0.3);
+            background: rgba(0, 212, 255, 0.05);
+        }
+        
+        .cipher-option.active {
+            border-color: #00d4ff;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(123, 44, 191, 0.15) 100%);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+        
+        .cipher-option.active .cipher-icon {
+            color: #00d4ff;
+            text-shadow: 0 0 10px #00d4ff;
+        }
+        
+        /* 输出区域 */
+        .output-box {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .output-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ff88, transparent);
+            animation: scanLine 2s linear infinite;
+        }
+        
+        @keyframes scanLine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* 滚动条 */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 3px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #00d4ff, #7b2cbf);
+            border-radius: 3px;
+        }
+        
+        /* 动画入场 */
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+        
+        /* 打字机效果 */
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 2s steps(30) forwards;
+        }
+        
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        /* 脉冲动画 */
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* 旋转装饰 */
+        .rotate-slow {
+            animation: rotateSlow 20s linear infinite;
+        }
+        
+        @keyframes rotateSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* 历史记录项 */
+        .history-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid #00d4ff;
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .history-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        /* 标签样式 */
+        .tag {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(123, 44, 191, 0.2));
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            font-size: 0.7rem;
+            padding: 2px 10px;
+        }
+        
+        /* 滑块样式 */
+        input[type="range"] {
+            -webkit-appearance: none;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            height: 6px;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(135deg, #00d4ff, #7b2cbf);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+        
+        /* 复制成功提示 */
+        .copy-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.9), rgba(0, 212, 255, 0.9));
+            color: #0a0e17;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            transform: translateX(200%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .copy-toast.show {
+            transform: translateX(0);
+        }
+        
+        /* 装饰线条 */
+        .decorative-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.5), transparent);
+        }
+        
+        /* Logo动画 */
+        .logo-ring {
+            position: absolute;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 50%;
+            animation: pulse 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="text-gray-200">
+    <!-- 背景效果 -->
+    <div class="grid-bg"></div>
+    
+    <!-- 浮动粒子 -->
+    <div id="particles"></div>
+    
+    <!-- 复制提示 -->
+    <div class="copy-toast" id="copyToast">
+        <i class="fas fa-check-circle mr-2"></i>已复制到剪贴板
+    </div>
+    
+    <!-- 主容器 -->
+    <div class="relative z-10 min-h-screen p-4 md:p-8">
+        <!-- 头部 -->
+        <header class="max-w-6xl mx-auto mb-8 fade-in">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="relative w-14 h-14 flex items-center justify-center">
+                        <div class="logo-ring w-14 h-14" style="animation-delay: 0s;"></div>
+                        <div class="logo-ring w-11 h-11" style="animation-delay: 0.5s;"></div>
+                        <div class="logo-ring w-8 h-8" style="animation-delay: 1s;"></div>
+                        <i class="fas fa-key text-cyber-blue text-xl relative z-10"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-display text-2xl md:text-3xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-cyber-purple">
+                            CIPHER VAULT
+                        </h1>
+                        <p class="text-xs text-gray-500 tracking-widest">密码殿堂 · 解密未知</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleHistory()" class="glass-card p-3 text-gray-400 hover:text-cyber-blue transition-colors">
+                        <i class="fas fa-history"></i>
+                    </button>
+                    <button onclick="showHelp()" class="glass-card p-3 text-gray-400 hover:text-cyber-blue transition-colors">
+                        <i class="fas fa-question-circle"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <!-- 主内容区 -->
+        <main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- 左侧：输入区 -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- 输入模块 -->
+                <div class="glass-card p-6 fade-in stagger-1">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyber-blue/20 to-cyber-purple/20 flex items-center justify-center">
+                                <i class="fas fa-keyboard text-cyber-blue text-sm"></i>
+                            </div>
+                            <h2 class="font-display text-lg font-semibold tracking-wide">输入源文</h2>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="tag text-cyber-blue">支持中文</span>
+                            <span class="tag text-cyber-purple">支持特殊字符</span>
+                        </div>
+                    </div>
+                    <textarea 
+                        id="inputText" 
+                        class="cyber-input w-full h-40 p-4 text-sm resize-none"
+                        placeholder="在此输入要加密或解密的文本...&#10;&#10;支持：英文字母、中文、数字、特殊符号等任意字符"
+                        oninput="handleInput()"
+                    ></textarea>
+                    <div class="flex justify-between items-center mt-3 text-xs text-gray-500">
+                        <span id="charCount">字符数: 0</span>
+                        <div class="flex gap-2">
+                            <button onclick="clearInput()" class="text-gray-500 hover:text-cyber-red transition-colors">
+                                <i class="fas fa-trash-alt mr-1"></i>清空
+                            </button>
+                            <button onclick="pasteText()" class="text-gray-500 hover:text-cyber-blue transition-colors">
+                                <i class="fas fa-paste mr-1"></i>粘贴
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 密码类型选择 -->
+                <div class="glass-card p-6 fade-in stagger-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyber-green/20 to-cyber-blue/20 flex items-center justify-center">
+                            <i class="fas fa-fingerprint text-cyber-green text-sm"></i>
+                        </div>
+                        <h2 class="font-display text-lg font-semibold tracking-wide">选择密码类型</h2>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="cipherOptions">
+                        <!-- 摩斯密码 -->
+                        <div class="cipher-option p-4 active" data-cipher="morse" onclick="selectCipher(this)">
+                            <div class="cipher-icon text-2xl mb-2 text-cyber-blue">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </div>
+                            <div class="font-semibold text-sm">摩斯密码</div>
+                            <div class="text-xs text-gray-500 mt-1">Morse Code</div>
+                        </div>
+                        
+                        <!-- 凯撒密码 -->
+                        <div class="cipher-option p-4" data-cipher="caesar" onclick="selectCipher(this)">
+                            <div class="cipher-icon text-2xl mb-2 text-gray-400">
+                                <i class="fas fa-rotate"></i>
+                            </div>
+                            <div class="font-semibold text-sm">凯撒密码</div>
+                            <div class="text-xs text-gray-500 mt-1">Caesar Cipher</div>
+                        </div>
+                        
+                        <!-- Base64 -->
+                        <div class="cipher-option p-4" data-cipher="base64" onclick="selectCipher(this)">
+                            <div class="cipher-icon text-2xl mb-2 text-gray-400">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="font-semibold text-sm">Base64</div>
+                            <div class="text-xs text-gray-500 mt-1">Base64 Encode</div>
+                        </div>
+                        
+                        <!-- 二进制 -->
+                        <div class="cipher-option p-4" data-cipher="binary" onclick="selectCipher(this)">
+                            <div class="cipher-icon text-2xl mb-2 text-gray-400">
+                                <i class="fas fa-microchip"></i>
+                            </div>
+                            <div class="font-semibold text-sm">二进制</div>
+                            <div class="text-xs text-gray-500 mt-1">Binary</div>
+                        </div>
+                        
+                        <!-- 栅栏密码 -->
+                        <div class="cipher-option p-4" data-cipher="railfence" onclick="selectCipher(this)">
+                            <div class="cipher-icon text-2xl mb-2 text-gray-400">
+                                <i class="fas fa-grip-lines"></i>
+                            </div>
+                            <div class="font-semibold text-sm">栅栏密码</div>
+                            <div class="text-xs text-gray-500 mt-1">Rail Fence</div>
+                        </div>
+                        
+                        <!-- 埃特巴什 -->
+                        <div class="cipher-option p-4" data-cipher="atbash" onclick="selectCipher(this)">
+                            <div class="cipher-icon text-2xl mb-2 text-gray-400">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <div class="font-semibold text-sm">埃特巴什</div>
+                            <div class="text-xs text-gray-500 mt-1">Atbash Cipher</div>
+                        </div>
+                        
+                        <!-- ASCII -->
+                        <div class="cipher-option p-4" data-cipher="ascii" onclick="selectCipher(this)">
+                            <div class="cipher-icon text-2xl mb-2 text-gray-400">
+                                <i class="fas fa-terminal"></i>
+                            </div>
+                            <div class="font-semibold text-sm">ASCII码</div>
+                            <div class="text-xs text-gray-500 mt-1">ASCII Code</div>
+                        </div>
+                        
+                        <!-- URL编码 -->
+                        <div class="cipher-option p-4" data-cipher="url" onclick="selectCipher(this)">
+                            <div class="cipher-icon text-2xl mb-2 text-gray-400">
+                                <i class="fas fa-link"></i>
+                            </div>
+                            <div class="font-semibold text-sm">URL编码</div>
+                            <div class="text-xs text-gray-500 mt-1">URL Encode</div>
+                        </div>
+                        
+                        <!-- 维吉尼亚 -->
+                        <div class="cipher-option p-4" data-cipher="vigenere" onclick="selectCipher(this)">
+                            <div class="cipher-icon text-2xl mb-2 text-gray-400">
+                                <i class="fas fa-table"></i>
+                            </div>
+                            <div class="font-semibold text-sm">维吉尼亚</div>
+                            <div class="text-xs text-gray-500 mt-1">Vigenère</div>
+                        </div>
+                        
+                        <!-- ROT13 -->
+                        <div class="cipher-option p-4" data-cipher="rot13" onclick="selectCipher(this)">
+                            <div class="cipher-icon text-2xl mb-2 text-gray-400">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <div class="font-semibold text-sm">ROT13</div>
+                            <div class="text-xs text-gray-500 mt-1">ROT13</div>
+                        </div>
+                        
+                        <!-- 十六进制 -->
+                        <div class="cipher-option p-4" data-cipher="hex" onclick="selectCipher(this)">
+                            <div class="cipher-icon text-2xl mb-2 text-gray-400">
+                                <i class="fas fa-hashtag"></i>
+                            </div>
+                            <div class="font-semibold text-sm">十六进制</div>
+                            <div class="text-xs text-gray-500 mt-1">Hexadecimal</div>
+                        </div>
+                        
+                        <!-- 反转 -->
+                        <div class="cipher-option p-4" data-cipher="reverse" onclick="selectCipher(this)">
+                            <div class="cipher-icon text-2xl mb-2 text-gray-400">
+                                <i class="fas fa-undo"></i>
+                            </div>
+                            <div class="font-semibold text-sm">字符串反转</div>
+                            <div class="text-xs text-gray-500 mt-1">Reverse</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 参数设置区 -->
+                    <div id="paramPanel" class="mt-4 hidden">
+                        <div class="decorative-line my-4"></div>
+                        <div id="paramContent"></div>
+                    </div>
+                </div>
+                
+                <!-- 操作按钮 -->
+                <div class="flex gap-4 fade-in stagger-3">
+                    <button onclick="encrypt()" class="cyber-btn flex-1 py-4 px-6 flex items-center justify-center gap-3">
+                        <i class="fas fa-lock"></i>
+                        <span>加密 ENCODE</span>
+                    </button>
+                    <button onclick="decrypt()" class="cyber-btn flex-1 py-4 px-6 flex items-center justify-center gap-3" style="border-color: rgba(0, 255, 136, 0.4); color: #00ff88;">
+                        <i class="fas fa-unlock"></i>
+                        <span>解密 DECODE</span>
+                    </button>
+                </div>
+                
+                <!-- 输出模块 -->
+                <div class="glass-card p-6 fade-in stagger-4">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyber-green/20 to-cyber-blue/20 flex items-center justify-center">
+                                <i class="fas fa-file-export text-cyber-green text-sm"></i>
+                            </div>
+                            <h2 class="font-display text-lg font-semibold tracking-wide">输出结果</h2>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="copyOutput()" class="text-gray-500 hover:text-cyber-blue transition-colors text-sm">
+                                <i class="fas fa-copy mr-1"></i>复制
+                            </button>
+                            <button onclick="downloadOutput()" class="text-gray-500 hover:text-cyber-blue transition-colors text-sm">
+                                <i class="fas fa-download mr-1"></i>下载
+                            </button>
+                        </div>
+                    </div>
+                    <div class="output-box p-4 min-h-32 max-h-64 overflow-auto">
+                        <pre id="outputText" class="text-cyber-green text-sm whitespace-pre-wrap break-all font-mono">等待输入...</pre>
+                    </div>
+                    <div class="flex justify-between items-center mt-3 text-xs text-gray-500">
+                        <span id="outputInfo">输出字符数: 0</span>
+                        <span id="cipherInfo" class="text-cyber-blue"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 右侧：信息面板 -->
+            <div class="space-y-6">
+                <!-- 当前密码信息 -->
+                <div class="glass-card p-6 fade-in stagger-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyber-purple/20 to-cyber-blue/20 flex items-center justify-center">
+                            <i class="fas fa-info-circle text-cyber-purple text-sm"></i>
+                        </div>
+                        <h2 class="font-display text-lg font-semibold tracking-wide">密码档案</h2>
+                    </div>
+                    <div id="cipherInfo" class="space-y-3 text-sm">
+                        <div class="text-gray-400 leading-relaxed">
+                            选择一种密码类型查看详细信息
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 历史记录 -->
+                <div class="glass-card p-6 fade-in stagger-3" id="historyPanel">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyber-gold/20 to-cyber-red/20 flex items-center justify-center">
+                                <i class="fas fa-clock-rotate-left text-cyber-gold text-sm"></i>
+                            </div>
+                            <h2 class="font-display text-lg font-semibold tracking-wide">历史记录</h2>
+                        </div>
+                        <button onclick="clearHistory()" class="text-xs text-gray-500 hover:text-cyber-red transition-colors">
+                            清空
+                        </button>
+                    </div>
+                    <div id="historyList" class="space-y-2 max-h-80 overflow-auto">
+                        <div class="text-gray-500 text-sm text-center py-4">
+                            暂无历史记录
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 快捷操作 -->
+                <div class="glass-card p-6 fade-in stagger-4">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyber-blue/20 to-cyber-green/20 flex items-center justify-center">
+                            <i class="fas fa-bolt text-cyber-blue text-sm"></i>
+                        </div>
+                        <h2 class="font-display text-lg font-semibold tracking-wide">快捷示例</h2>
+                    </div>
+                    <div class="space-y-2">
+                        <button onclick="loadExample('morse')" class="w-full text-left p-3 rounded-lg bg-black/20 hover:bg-cyber-blue/10 transition-colors text-sm">
+                            <span class="text-cyber-blue">SOS</span> → 摩斯密码求救信号
+                        </button>
+                        <button onclick="loadExample('caesar')" class="w-full text-left p-3 rounded-lg bg-black/20 hover:bg-cyber-blue/10 transition-colors text-sm">
+                            <span class="text-cyber-purple">HELLO</span> → 凯撒密码示例
+                        </button>
+                        <button onclick="loadExample('binary')" class="w-full text-left p-3 rounded-lg bg-black/20 hover:bg-cyber-blue/10 transition-colors text-sm">
+                            <span class="text-cyber-green">Hello</span> → 二进制编码
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- 底部 -->
+        <footer class="max-w-6xl mx-auto mt-8 text-center text-xs text-gray-600">
+            <div class="decorative-line mb-4"></div>
+            <p>CIPHER VAULT · 密码殿堂 | 探索加密的奥秘</p>
+        </footer>
+    </div>
+    
+    <!-- 帮助弹窗 -->
+    <div id="helpModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card p-8 max-w-2xl w-full max-h-[80vh] overflow-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="font-display text-xl font-bold text-cyber-blue">使用指南</h3>
+                <button onclick="closeHelp()" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="space-y-4 text-sm text-gray-300">
+                <div>
+                    <h4 class="text-cyber-green font-semibold mb-2">基本操作</h4>
+                    <p>1. 在输入框中输入要加密/解密的文本</p>
+                    <p>2. 选择一种密码类型</p>
+                    <p>3. 点击"加密"或"解密"按钮</p>
+                    <p>4. 结果将显示在输出区域</p>
+                </div>
+                <div>
+                    <h4 class="text-cyber-green font-semibold mb-2">支持的密码类型</h4>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>摩斯密码:</strong> 使用点和划表示字母</li>
+                        <li><strong>凯撒密码:</strong> 字母偏移加密，可设置偏移量</li>
+                        <li><strong>Base64:</strong> 常见的编码方式</li>
+                        <li><strong>二进制:</strong> 将字符转换为二进制</li>
+                        <li><strong>栅栏密码:</strong> 按行数重新排列字符</li>
+                        <li><strong>埃特巴什:</strong> 字母表镜像替换</li>
+                        <li><strong>ASCII码:</strong> 字符转ASCII数值</li>
+                        <li><strong>URL编码:</strong> 网址安全编码</li>
+                        <li><strong>维吉尼亚:</strong> 多表替换密码</li>
+                        <li><strong>ROT13:</strong> 字母旋转13位</li>
+                        <li><strong>十六进制:</strong> 字符转十六进制</li>
+                        <li><strong>字符串反转:</strong> 简单的字符反转</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 状态管理
+        let currentCipher = 'morse';
+        let history = JSON.parse(localStorage.getItem('cipherHistory') || '[]');
+        let cipherParams = {
+            caesar: { shift: 3 },
+            railfence: { rails: 2 },
+            vigenere: { key: 'KEY' }
+        };
+        
+        // 密码信息
+        const cipherInfoData = {
+            morse: {
+                name: '摩斯密码',
+                description: '一种时通时断的信号代码，通过不同的排列顺序来表达不同的英文字母、数字和标点符号。',
+                invented: '1836年',
+                supports: '字母、数字'
+            },
+            caesar: {
+                name: '凯撒密码',
+                description: '一种替换加密技术，通过将字母表中的字母移动固定数目来进行加密。',
+                invented: '古罗马时期',
+                supports: '字母'
+            },
+            base64: {
+                name: 'Base64编码',
+                description: '一种基于64个可打印字符来表示二进制数据的表示方法，常用于数据传输。',
+                invented: '1987年',
+                supports: '任意字符'
+            },
+            binary: {
+                name: '二进制编码',
+                description: '将每个字符转换为其对应的二进制数值表示，是计算机最基础的编码方式。',
+                invented: '计算机时代',
+                supports: '任意字符'
+            },
+            railfence: {
+                name: '栅栏密码',
+                description: '一种换位密码，将明文按行数分成多行，然后按行读取得到密文。',
+                invented: '古代',
+                supports: '字母'
+            },
+            atbash: {
+                name: '埃特巴什码',
+                description: '一种简单的替换密码，将字母表中的字母映射为其反向位置的字母。',
+                invented: '公元前500年',
+                supports: '字母'
+            },
+            ascii: {
+                name: 'ASCII码',
+                description: '美国信息交换标准代码，将字符转换为对应的数字编码。',
+                invented: '1963年',
+                supports: '任意字符'
+            },
+            url: {
+                name: 'URL编码',
+                description: '将URL中的特殊字符转换为%后跟两位十六进制数的形式。',
+                invented: '1994年',
+                supports: '任意字符'
+            },
+            vigenere: {
+                name: '维吉尼亚密码',
+                description: '一种多表替换密码，使用关键词来决定每个字母的偏移量。',
+                invented: '1553年',
+                supports: '字母'
+            },
+            rot13: {
+                name: 'ROT13',
+                description: '凯撒密码的特例，将字母旋转13位，加密和解密使用相同操作。',
+                invented: '古罗马时期',
+                supports: '字母'
+            },
+            hex: {
+                name: '十六进制编码',
+                description: '将字符转换为其十六进制数值表示，常用于表示二进制数据。',
+                invented: '计算机时代',
+                supports: '任意字符'
+            },
+            reverse: {
+                name: '字符串反转',
+                description: '最简单的加密方式之一，将字符串顺序完全反转。',
+                invented: '古代',
+                supports: '任意字符'
+            }
+        };
+        
+        // 摩斯密码映射
+        const morseCode = {
+            'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
+            'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
+            'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.',
+            'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
+            'Y': '-.--', 'Z': '--..',
+            '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-',
+            '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.',
+            '.': '.-.-.-', ',': '--..--', '?': '..--..', "'": '.----.', '!': '-.-.--',
+            '/': '-..-.', '(': '-.--.', ')': '-.--.-', '&': '.-...', ':': '---...',
+            ';': '-.-.-.', '=': '-...-', '+': '.-.-.', '-': '-....-', '_': '..--.-',
+            '"': '.-..-.', '$': '...-..-', '@': '.--.-.'
+        };
+        
+        // 反向摩斯密码映射
+        const reverseMorseCode = {};
+        for (let key in morseCode) {
+            reverseMorseCode[morseCode[key]] = key;
+        }
+        
+        // 初始化粒子
+        function initParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+        
+        // 选择密码类型
+        function selectCipher(element) {
+            document.querySelectorAll('.cipher-option').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            currentCipher = element.dataset.cipher;
+            updateCipherInfo();
+            updateParamPanel();
+        }
+        
+        // 更新密码信息显示
+        function updateCipherInfo() {
+            const info = cipherInfoData[currentCipher];
+            const container = document.getElementById('cipherInfo');
+            container.innerHTML = `
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="text-cyber-blue font-display font-bold">${info.name}</span>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed mb-3">${info.description}</p>
+                <div class="flex gap-4 text-xs">
+                    <div>
+                        <span class="text-gray-500">发明时间:</span>
+                        <span class="text-cyber-purple ml-1">${info.invented}</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-500">支持字符:</span>
+                        <span class="text-cyber-green ml-1">${info.supports}</span>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // 更新参数面板
+        function updateParamPanel() {
+            const panel = document.getElementById('paramPanel');
+            const content = document.getElementById('paramContent');
+            
+            let html = '';
+            
+            if (currentCipher === 'caesar') {
+                html = `
+                    <div class="flex items-center gap-4">
+                        <label class="text-sm text-gray-400">偏移量:</label>
+                        <input type="range" min="1" max="25" value="${cipherParams.caesar.shift}" 
+                            class="flex-1" oninput="updateCaesarShift(this.value)">
+                        <span class="text-cyber-blue font-mono w-8 text-center">${cipherParams.caesar.shift}</span>
+                    </div>
+                `;
+            } else if (currentCipher === 'railfence') {
+                html = `
+                    <div class="flex items-center gap-4">
+                        <label class="text-sm text-gray-400">栅栏数:</label>
+                        <input type="range" min="2" max="10" value="${cipherParams.railfence.rails}" 
+                            class="flex-1" oninput="updateRailfenceRails(this.value)">
+                        <span class="text-cyber-blue font-mono w-8 text-center">${cipherParams.railfence.rails}</span>
+                    </div>
+                `;
+            } else if (currentCipher === 'vigenere') {
+                html = `
+                    <div class="flex items-center gap-4">
+                        <label class="text-sm text-gray-400">密钥:</label>
+                        <input type="text" value="${cipherParams.vigenere.key}" 
+                            class="cyber-input flex-1 px-3 py-2 text-sm"
+                            oninput="updateVigenereKey(this.value)"
+                            placeholder="输入密钥">
+                    </div>
+                `;
+            }
+            
+            if (html) {
+                content.innerHTML = html;
+                panel.classList.remove('hidden');
+            } else {
+                panel.classList.add('hidden');
+            }
+        }
+        
+        // 参数更新函数
+        function updateCaesarShift(value) {
+            cipherParams.caesar.shift = parseInt(value);
+            document.querySelector('#paramContent span').textContent = value;
+        }
+        
+        function updateRailfenceRails(value) {
+            cipherParams.railfence.rails = parseInt(value);
+            document.querySelector('#paramContent span').textContent = value;
+        }
+        
+        function updateVigenereKey(value) {
+            cipherParams.vigenere.key = value.toUpperCase().replace(/[^A-Z]/g, '');
+        }
+        
+        // 加密函数
+        function encrypt() {
+            const input = document.getElementById('inputText').value;
+            if (!input.trim()) {
+                showOutput('请输入要加密的文本', 'error');
+                return;
+            }
+            
+            let result = '';
+            try {
+                switch (currentCipher) {
+                    case 'morse':
+                        result = encryptMorse(input);
+                        break;
+                    case 'caesar':
+                        result = encryptCaesar(input, cipherParams.caesar.shift);
+                        break;
+                    case 'base64':
+                        result = btoa(unescape(encodeURIComponent(input)));
+                        break;
+                    case 'binary':
+                        result = encryptBinary(input);
+                        break;
+                    case 'railfence':
+                        result = encryptRailfence(input, cipherParams.railfence.rails);
+                        break;
+                    case 'atbash':
+                        result = encryptAtbash(input);
+                        break;
+                    case 'ascii':
+                        result = encryptAscii(input);
+                        break;
+                    case 'url':
+                        result = encodeURIComponent(input);
+                        break;
+                    case 'vigenere':
+                        result = encryptVigenere(input, cipherParams.vigenere.key);
+                        break;
+                    case 'rot13':
+                        result = encryptCaesar(input, 13);
+                        break;
+                    case 'hex':
+                        result = encryptHex(input);
+                        break;
+                    case 'reverse':
+                        result = input.split('').reverse().join('');
+                        break;
+                }
+                showOutput(result);
+                addToHistory(input, result, currentCipher, 'encrypt');
+            } catch (e) {
+                showOutput('加密失败: ' + e.message, 'error');
+            }
+        }
+        
+        // 解密函数
+        function decrypt() {
+            const input = document.getElementById('inputText').value;
+            if (!input.trim()) {
+                showOutput('请输入要解密的文本', 'error');
+                return;
+            }
+            
+            let result = '';
+            try {
+                switch (currentCipher) {
+                    case 'morse':
+                        result = decryptMorse(input);
+                        break;
+                    case 'caesar':
+                        result = decryptCaesar(input, cipherParams.caesar.shift);
+                        break;
+                    case 'base64':
+                        result = decodeURIComponent(escape(atob(input)));
+                        break;
+                    case 'binary':
+                        result = decryptBinary(input);
+                        break;
+                    case 'railfence':
+                        result = decryptRailfence(input, cipherParams.railfence.rails);
+                        break;
+                    case 'atbash':
+                        result = encryptAtbash(input); // Atbash是自反的
+                        break;
+                    case 'ascii':
+                        result = decryptAscii(input);
+                        break;
+                    case 'url':
+                        result = decodeURIComponent(input);
+                        break;
+                    case 'vigenere':
+                        result = decryptVigenere(input, cipherParams.vigenere.key);
+                        break;
+                    case 'rot13':
+                        result = encryptCaesar(input, 13); // ROT13是自反的
+                        break;
+                    case 'hex':
+                        result = decryptHex(input);
+                        break;
+                    case 'reverse':
+                        result = input.split('').reverse().join('');
+                        break;
+                }
+                showOutput(result);
+                addToHistory(input, result, currentCipher, 'decrypt');
+            } catch (e) {
+                showOutput('解密失败: ' + e.message, 'error');
+            }
+        }
+        
+        // 摩斯密码加密
+        function encryptMorse(text) {
+            return text.toUpperCase().split('').map(char => {
+                if (char === ' ') return '/';
+                return morseCode[char] || char;
+            }).join(' ');
+        }
+        
+        // 摩斯密码解密
+        function decryptMorse(text) {
+            return text.split('/').map(word => {
+                return word.trim().split(' ').map(code => {
+                    return reverseMorseCode[code] || code;
+                }).join('');
+            }).join(' ');
+        }
+        
+        // 凯撒密码加密
+        function encryptCaesar(text, shift) {
+            return text.split('').map(char => {
+                if (char.match(/[a-z]/i)) {
+                    const base = char === char.toUpperCase() ? 65 : 97;
+                    return String.fromCharCode((char.charCodeAt(0) - base + shift) % 26 + base);
+                }
+                return char;
+            }).join('');
+        }
+        
+        // 凯撒密码解密
+        function decryptCaesar(text, shift) {
+            return encryptCaesar(text, 26 - shift);
+        }
+        
+        // 二进制加密
+        function encryptBinary(text) {
+            return text.split('').map(char => {
+                return char.charCodeAt(0).toString(2).padStart(8, '0');
+            }).join(' ');
+        }
+        
+        // 二进制解密
+        function decryptBinary(text) {
+            return text.split(' ').map(bin => {
+                return String.fromCharCode(parseInt(bin, 2));
+            }).join('');
+        }
+        
+        // 栅栏密码加密
+        function encryptRailfence(text, rails) {
+            if (rails >= text.length) return text;
+            const fence = Array(rails).fill('').map(() => []);
+            let rail = 0, direction = 1;
+            
+            for (let char of text) {
+                fence[rail].push(char);
+                rail += direction;
+                if (rail === 0 || rail === rails - 1) direction *= -1;
+            }
+            
+            return fence.flat().join('');
+        }
+        
+        // 栅栏密码解密
+        function decryptRailfence(text, rails) {
+            if (rails >= text.length) return text;
+            const fence = Array(rails).fill(null).map(() => []);
+            const pattern = [];
+            let rail = 0, direction = 1;
+            
+            for (let i = 0; i < text.length; i++) {
+                pattern.push(rail);
+                rail += direction;
+                if (rail === 0 || rail === rails - 1) direction *= -1;
+            }
+            
+            const counts = Array(rails).fill(0);
+            pattern.forEach(r => counts[r]++);
+            
+            let index = 0;
+            for (let r = 0; r < rails; r++) {
+                fence[r] = text.slice(index, index + counts[r]).split('');
+                index += counts[r];
+            }
+            
+            const positions = Array(rails).fill(0);
+            return pattern.map(r => fence[r][positions[r]++]).join('');
+        }
+        
+        // 埃特巴什加密
+        function encryptAtbash(text) {
+            return text.split('').map(char => {
+                if (char.match(/[a-z]/i)) {
+                    const base = char === char.toUpperCase() ? 65 : 97;
+                    return String.fromCharCode(base + 25 - (char.charCodeAt(0) - base));
+                }
+                return char;
+            }).join('');
+        }
+        
+        // ASCII加密
+        function encryptAscii(text) {
+            return text.split('').map(char => char.charCodeAt(0)).join(' ');
+        }
+        
+        // ASCII解密
+        function decryptAscii(text) {
+            return text.split(' ').map(code => String.fromCharCode(parseInt(code))).join('');
+        }
+        
+        // 维吉尼亚加密
+        function encryptVigenere(text, key) {
+            if (!key) return text;
+            let keyIndex = 0;
+            return text.split('').map(char => {
+                if (char.match(/[a-z]/i)) {
+                    const base = char === char.toUpperCase() ? 65 : 97;
+                    const shift = key[keyIndex % key.length].charCodeAt(0) - 65;
+                    keyIndex++;
+                    return String.fromCharCode((char.charCodeAt(0) - base + shift) % 26 + base);
+                }
+                return char;
+            }).join('');
+        }
+        
+        // 维吉尼亚解密
+        function decryptVigenere(text, key) {
+            if (!key) return text;
+            let keyIndex = 0;
+            return text.split('').map(char => {
+                if (char.match(/[a-z]/i)) {
+                    const base = char === char.toUpperCase() ? 65 : 97;
+                    const shift = key[keyIndex % key.length].charCodeAt(0) - 65;
+                    keyIndex++;
+                    return String.fromCharCode((char.charCodeAt(0) - base - shift + 26) % 26 + base);
+                }
+                return char;
+            }).join('');
+        }
+        
+        // 十六进制加密
+        function encryptHex(text) {
+            return text.split('').map(char => {
+                return char.charCodeAt(0).toString(16).padStart(2, '0');
+            }).join(' ');
+        }
+        
+        // 十六进制解密
+        function decryptHex(text) {
+            return text.split(' ').map(hex => {
+                return String.fromCharCode(parseInt(hex, 16));
+            }).join('');
+        }
+        
+        // 显示输出
+        function showOutput(text, type = 'success') {
+            const output = document.getElementById('outputText');
+            const info = document.getElementById('outputInfo');
+            const cipherInfoEl = document.getElementById('cipherInfo');
+            
+            output.textContent = text;
+            output.style.color = type === 'error' ? '#ff3366' : '#00ff88';
+            
+            info.textContent = `输出字符数: ${text.length}`;
+            cipherInfoEl.textContent = cipherInfoData[currentCipher].name;
+        }
+        
+        // 添加到历史记录
+        function addToHistory(input, output, cipher, type) {
+            const item = {
+                input: input.substring(0, 30) + (input.length > 30 ? '...' : ''),
+                output: output.substring(0, 30) + (output.length > 30 ? '...' : ''),
+                cipher,
+                type,
+                time: new Date().toLocaleTimeString()
+            };
+            
+            history.unshift(item);
+            if (history.length > 20) history.pop();
+            
+            localStorage.setItem('cipherHistory', JSON.stringify(history));
+            renderHistory();
+        }
+        
+        // 渲染历史记录
+        function renderHistory() {
+            const container = document.getElementById('historyList');
+            
+            if (history.length === 0) {
+                container.innerHTML = '<div class="text-gray-500 text-sm text-center py-4">暂无历史记录</div>';
+                return;
+            }
+            
+            container.innerHTML = history.map((item, index) => `
+                <div class="history-item p-3 cursor-pointer" onclick="loadHistory(${index})">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-xs text-cyber-blue">${cipherInfoData[item.cipher].name}</span>
+                        <span class="text-xs text-gray-500">${item.time}</span>
+                    </div>
+                    <div class="text-xs text-gray-400 truncate">${item.type === 'encrypt' ? '加密' : '解密'}: ${item.input}</div>
+                </div>
+            `).join('');
+        }
+        
+        // 加载历史记录
+        function loadHistory(index) {
+            const item = history[index];
+            document.getElementById('inputText').value = item.input.replace('...', '');
+            
+            document.querySelectorAll('.cipher-option').forEach(el => {
+                el.classList.toggle('active', el.dataset.cipher === item.cipher);
+            });
+            currentCipher = item.cipher;
+            updateCipherInfo();
+            updateParamPanel();
+            handleInput();
+        }
+        
+        // 清空历史
+        function clearHistory() {
+            history = [];
+            localStorage.removeItem('cipherHistory');
+            renderHistory();
+        }
+        
+        // 输入处理
+        function handleInput() {
+            const input = document.getElementById('inputText').value;
+            document.getElementById('charCount').textContent = `字符数: ${input.length}`;
+        }
+        
+        // 清空输入
+        function clearInput() {
+            document.getElementById('inputText').value = '';
+            handleInput();
+        }
+        
+        // 粘贴文本
+        async function pasteText() {
+            try {
+                const text = await navigator.clipboard.readText();
+                document.getElementById('inputText').value = text;
+                handleInput();
+            } catch (e) {
+                alert('无法访问剪贴板');
+            }
+        }
+        
+        // 复制输出
+        function copyOutput() {
+            const text = document.getElementById('outputText').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast();
+            });
+        }
+        
+        // 显示提示
+        function showToast() {
+            const toast = document.getElementById('copyToast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+        
+        // 下载输出
+        function downloadOutput() {
+            const text = document.getElementById('outputText').textContent;
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `cipher_${currentCipher}_${Date.now()}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        // 加载示例
+        function loadExample(type) {
+            const examples = {
+                morse: { text: 'SOS', cipher: 'morse' },
+                caesar: { text: 'HELLO WORLD', cipher: 'caesar' },
+                binary: { text: 'Hello', cipher: 'binary' }
+            };
+            
+            const example = examples[type];
+            document.getElementById('inputText').value = example.text;
+            
+            document.querySelectorAll('.cipher-option').forEach(el => {
+                el.classList.toggle('active', el.dataset.cipher === example.cipher);
+            });
+            currentCipher = example.cipher;
+            updateCipherInfo();
+            updateParamPanel();
+            handleInput();
+        }
+        
+        // 显示帮助
+        function showHelp() {
+            document.getElementById('helpModal').classList.remove('hidden');
+        }
+        
+        // 关闭帮助
+        function closeHelp() {
+            document.getElementById('helpModal').classList.add('hidden');
+        }
+        
+        // 切换历史面板
+        function toggleHistory() {
+            const panel = document.getElementById('historyPanel');
+            panel.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            initParticles();
+            updateCipherInfo();
+            renderHistory();
+        });
+        
+        // 键盘快捷键
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    encrypt();
+                } else if (e.shiftKey && e.key === 'Enter') {
+                    e.preventDefault();
+                    decrypt();
+                }
+            }
+            if (e.key === 'Escape') {
+                closeHelp();
+            }
+        });
+    </script>
+</body>
+</html>
