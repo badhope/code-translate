@@ -77,3 +77,128 @@
 ## 👨‍💻 作者
 Designed & Developed by **GLM5**.
 如果你喜欢这个项目，欢迎 Star ⭐ 支持！
+
+
+# CIPHER NEXUS
+## Version License Status
+
+Explore classical and modern encryption technologies, seeking hidden truths within the digital maze. **CIPHER NEXUS** is a single-file web application providing modern encryption and decryption services. It's not just a tool, but a gateway to a cryptographic world filled with technological sophistication and mysterious atmosphere. Built with modular architecture design, featuring a clean interface, powerful functionality, and support for large-scale text processing.
+
+---
+
+## ✨ Core Features
+
+### 🏗️ Modular Architecture
+Abandoning the traditional "stacked" layout of conventional tools, adopting a view-switching architecture:
+
+| Module | Description |
+|--------|-------------|
+| **Console** | System overview and quick access entry points |
+| **Workbench** | Core encryption/decryption operation area |
+| **Archive** | History record management and export |
+| **Cipher Gallery** | Cryptography knowledge encyclopedia |
+
+### 🔐 Rich Cryptographic Algorithms
+Supports **16 mainstream cipher algorithms**, covering three major categories:
+
+| Category | Algorithms |
+|----------|------------|
+| **Classical Ciphers** | Morse Code, Caesar Cipher, Atbash, Rail Fence, Vigenère, Bacon's Cipher, Affine Cipher, ROT13 |
+| **Modern Encoding** | Base64, URL Encoding, Binary, Hexadecimal, ASCII Code |
+| **Hash Digests** | MD5, SHA-1, SHA-256 (One-way Encryption) |
+
+### 🎨 Immersive Visual Experience
+- **Glassmorphism**: Translucent frosted texture with clear layering
+- **Neon Cyberpunk**: Deep background with neon glowing effects
+- **Dynamic Elements**: Floating geometries, scanline animations, grid backgrounds
+- **Exclusive Icons**: Each cipher algorithm equipped with unique SVG icons, saying goodbye to boredom
+
+### 🚀 Powerful Functionality Support
+- **Massive Text**: Supports ultra-long text input and processing, no character limits
+- **File Interaction**: Supports drag-and-drop upload of `.txt` files, supports result download
+- **Local Storage**: Operation history automatically saved to browser local storage
+- **Responsive Design**: Perfectly adapts to both mobile and desktop devices
+
+---
+
+## 🛠️ Technology Stack
+
+| Component | Technology |
+|-----------|------------|
+| **Frontend Framework** | HTML5 + Native JavaScript (ES6+) |
+| **Style Engine** | Tailwind CSS (CDN) |
+| **Encryption Library** | Crypto-JS (for SHA, MD5, and other modern hash algorithms) |
+| **Icon Library** | Font Awesome 6 + Custom SVG Icons |
+| **Fonts** | Orbitron (Display) + JetBrains Mono (Monospace) |
+
+---
+
+## 📖 User Guide
+
+### 1. Console
+The homepage displays system status and entry points for the four major functional modules. Click on cards to access corresponding functions.
+
+### 2. Workbench
+This is the core operation area:
+
+1. **Select Mode**: Click to switch between **Encrypt Mode** or **Decrypt Mode** at the top
+2. **Input Text**: Type text in the left input box, or drag-and-drop to upload files
+3. **Select Algorithm**: Choose a cipher algorithm from the bottom grid (some algorithms require parameter configuration)
+4. **Execute**: Click the **Execute Encryption/Decryption** button, results will display on the right
+
+### 3. Archive
+- View all historical operation records
+- Click on records to quickly restore to workbench
+- Supports one-click clear or export as JSON file
+
+### 4. Cipher Gallery
+Browse introductions, classifications, and features of all supported cipher algorithms, understanding the history and principles behind them.
+
+---
+
+## 🎨 Design Philosophy
+
+Design inspiration comes from **"Digital Maze"** and **"Agent Archives"**.
+
+| Aspect | Description |
+|--------|-------------|
+| **Color Scheme** | Based on deep **Void Black** (#05080f), accented with **Neon Blue** (#00f0ff) and **Neon Purple** (#bf00ff), creating a precise and suspenseful technological atmosphere |
+| **Interaction** | All interactions include micro-animations, button hover glows, card floating effects, aiming to provide smooth operation feedback |
+| **Minimalism** | Hides non-essential elements through view switching, ensuring users focus on current tasks at any moment |
+
+---
+
+## 📦 Deployment & Running
+
+This project is a **single-file pure static application**, requiring no backend server and no dependency installation.
+
+1. Download the `index.html` file
+2. Double-click the file to open directly in browser for use
+3. Or deploy on any static website hosting service (such as **GitHub Pages**, **Vercel**, **Netlify**)
+
+---
+
+## 📜 Changelog
+
+### v2.0.0 (Current)
+| Type | Description |
+|------|-------------|
+| **Refactor** | Adopted modular view architecture, cleaner interface |
+| **New** | Added MD5, SHA-1, SHA-256, Bacon's Cipher, Affine Cipher |
+| **Optimize** | Brand new UI design, introducing glassmorphism and neon style |
+| **Feature** | Supports file drag-and-drop upload, history record export |
+| **Adaptation** | Improved mobile bottom navigation adaptation |
+
+---
+
+## 👨‍💻 Author
+
+**Designed & Developed by GLM5**
+
+If you like this project, welcome to **Star ⭐** to support!
+
+---
+
+
+
+
