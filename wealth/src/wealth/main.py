@@ -1,11 +1,15 @@
 """Main FastAPI application entry point."""
 
+import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from loguru import logger
 import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "scripts"))
+from port_utils import get_port_with_retry
 
 from wealth.api.routes import router
 from wealth.security.middleware import AntiScrapMiddleware, RateLimiter, security_monitor
@@ -24,7 +28,7 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title="Wealth API",
         description="Quantitative Analysis Platform for Stocks and Funds",
-        version="0.2.0",
+        version="0.3.0",
         lifespan=lifespan,
     )
 
@@ -49,7 +53,7 @@ def create_app() -> FastAPI:
     async def health_check():
         return {
             "status": "healthy",
-            "version": "0.2.0",
+            "version": "0.3.0",
             "security": security_monitor.get_stats()
         }
 
@@ -67,10 +71,13 @@ app = create_app()
 
 if __name__ == "__main__":
     import uvicorn
+    port = int(os.environ.get("PORT", 8000))
+    actual_port = get_port_with_retry(port)
+    logger.info(f"Starting server on port {actual_port}")
     uvicorn.run(
         "wealth.main:app",
         host="0.0.0.0",
-        port=8000,
-        reload=True,
+        port=actual_port,
+        reload=False,
         log_level="info",
     )

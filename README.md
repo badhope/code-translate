@@ -1,161 +1,239 @@
-# 🔐 CIPHER NEXUS - 密码枢纽
+# Wealth - 智能量化分析平台
 
-> 专业的密码学工具平台 | 50+ 加密算法 | 赛博朋克风格
+![Version](https://img.shields.io/badge/version-0.3.0-blue)
+![Python](https://img.shields.io/badge/python-3.10+-green)
+![Vue](https://img.shields.io/badge/vue-3.4-brightgreen)
 
-![Version](https://img.shields.io/badge/version-2.0-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-![Status](https://img.shields.io/badge/status-Active-brightgreen)
+Wealth 是一个专业的智能量化分析平台，支持股票、基金等金融产品的实时数据分析、策略回测、机器学习预测和可视化展示。
 
-## 📌 项目简介
+## 核心功能
 
-**CIPHER NEXUS（密码枢纽）** 是一个专业的在线密码学工具平台，提供50+种古典密码、现代加密、编码转换和特殊编码功能。采用赛博朋克视觉风格设计，配备丰富的微交互动画，为用户带来沉浸式的使用体验。
+### 数据采集
+- **AKShare 数据源**: 实时获取 A 股市场数据
+- **Yahoo Finance**: 港股、美股数据支持
+- **东方财富爬虫**: 基金、债券数据
+- **爬虫框架**: 灵活可扩展的数据采集
 
-## ✨ 核心特性
+### 量化分析引擎
+- **技术指标**: MACD、KDJ、RSI、布林带、威廉指标
+- **策略回测**: 多策略对比分析
+- **组合管理**: 仓位管理、风险控制
 
-### 🔐 加密算法
-- **古典密码**: 凯撒密码、维吉尼亚密码、栅栏密码、Atbash、Polybius、培根密码、仿射密码等12种
-- **现代加密**: AES、DES、3DES、RC4、SM4国密、Rabbit、AES-GCM、ChaCha20等8种
-- **编码转换**: Base64、Base32、Base58、Base91、Base100、URL、HTML、Unicode、ASCII、UTF-8、Hex、Octal等14种
-- **特殊编码**: 摩斯电码、二进制、猪圈密码、敲击码、ROT47、键盘密码、LeetSpeak等8种
-- **工具类**: MD5、SHA-1、SHA-256、SHA-512、RIPEMD、UUID生成等
+### 机器学习预测
+- **LSTM 模型**: 时间序列预测
+- **Prophet 模型**: 趋势预测
+- **XGBoost 模型**: 分类与回归
 
-### 🎨 视觉设计
-- 赛博朋克风格（Neon Cyberpunk）
-- 玻璃拟态（Glassmorphism）
-- 动态粒子背景
-- 50+ CSS动画效果
-- GSAP平滑过渡动画
+### 安全防护
+- **反爬虫机制**: 请求频率限制、行为分析
+- **数据加密**: AES-256 加密算法
+- **RBAC 权限控制**: 角色权限管理
 
-### ⚡ 核心功能
-- 📝 实时字符计数
-- 🔍 自动内容识别
-- 🔄 转换链（连续转换）
-- 📋 一键复制
-- 💾 历史记录（本地存储）
-- 📤 导出/导入历史
-- 🌗 明暗主题切换
-- 📱 完整响应式支持
+## 快速开始
 
-## 🛠️ 技术栈
+### 环境要求
+- Python 3.10+
+- Node.js 18+
+- npm 或 yarn
 
-### 前端框架
-- **HTML5** - 语义化标记
-- **CSS3** - 现代布局与动画
-- **JavaScript (ES6+)** - 核心逻辑
+### 后端安装
 
-### 依赖库
-| 库 | 用途 |
-|---|---|
-| Tailwind CSS | 实用优先CSS框架 |
-| CryptoJS | 加密解密算法 |
-| GSAP | 高级动画引擎 |
-| Canvas Confetti | 庆祝动画效果 |
-| Typed.js | 打字机效果 |
-| Lucide Icons | 图标库 |
-| Font Awesome 6 | 图标库 |
-
-### 设计规范
-- **字体**: Orbitron (标题) + JetBrains Mono (代码)
-- **主色调**: 霓虹蓝 (#00f0ff) + 霓虹紫 (#bf00ff)
-- **背景**: 深空黑 (#05080f)
-- **间距系统**: 8px 基础倍数
-
-## 📁 项目结构
-
-```
-cipher-nexus/
-├── index.html              # 主入口页面
-├── src/
-│   ├── css/
-│   │   └── styles.css      # 完整样式表
-│   └── js/
-│       └── main.js         # 核心逻辑 (1400+ 行)
-├── .gitignore
-└── LICENSE
-```
-
-## 🚀 快速开始
-
-### 本地运行
 ```bash
-# 克隆项目
-git clone https://github.com/badhope/cipher-nexus.git
-
-# 进入目录
-cd cipher-nexus
-
-# 使用任意HTTP服务器打开
-# 方法1: Python
-python -m http.server 8000
-
-# 方法2: Node.js
-npx serve .
-
-# 方法3: VS Code Live Server
-# 右键 index.html -> Open with Live Server
+cd wealth
+pip install -r requirements.txt
 ```
 
-### 访问方式
-打开浏览器访问: `http://localhost:8000`
+或使用 pyproject.toml:
 
-## 🎯 使用流程
+```bash
+pip install loguru fastapi uvicorn pandas numpy akshare httpx pydantic pyecharts yfinance
+```
 
-1. **进入系统** - 点击"进入系统"或按Enter
-2. **输入内容** - 在输入框中输入需要转换的文本
-3. **选择算法** - 从下拉菜单选择加密/编码类型
-4. **设置参数** - 根据需要设置密钥或偏移量
-5. **执行转换** - 点击转换按钮
-6. **复制结果** - 点击复制按钮或使用Ctrl+C
+### 前端安装
 
-## 📱 响应式支持
+```bash
+cd wealth/frontend
+npm install
+```
 
-| 设备类型 | 断点 | 适配策略 |
-|---------|------|---------|
-| 手机 | < 480px | 单列布局，大触摸区域 |
-| 平板 | 481-768px | 自适应网格 |
-| 桌面 | > 768px | 完整布局 |
+### 启动服务
 
-## 🔮 未来扩展
+```bash
+# 启动后端 (端口 8000，自动检测可用端口)
+cd wealth/src
+python -m wealth.main
 
-### 计划功能
-- [ ] 🔄 解密功能支持
-- [ ] 📤 API接口开放
-- [ ] 📱 PWA离线支持
-- [ ] 🌐 多语言支持
-- [ ] 👥 用户登录/收藏
-- [ ] 📊 转换统计分析
-- [ ] 🎮 加密游戏模块
+# 启动前端 (新终端)
+cd wealth/frontend
+npm run dev
+```
 
-### 扩展方向
-1. **移动端App** - React Native / Flutter
-2. **桌面应用** - Electron
-3. **浏览器插件** - Chrome Extension
-4. **后端服务** - Node.js API服务
+### 运行测试
 
-## 🤝 贡献指南
+```bash
+cd wealth/scripts
+python simulation_test.py
+```
 
-欢迎提交Issue和Pull Request！
+## 项目结构
+
+```
+wealth/
+├── src/                    # 后端源代码
+│   └── wealth/
+│       ├── api/           # API 路由
+│       ├── data/          # 数据源
+│       ├── engine/        # 量化引擎
+│       ├── ml/           # 机器学习
+│       ├── security/      # 安全模块
+│       ├── utils/        # 工具函数
+│       ├── vis/          # 可视化
+│       └── main.py       # 应用入口
+├── frontend/              # 前端源代码
+│   └── src/
+│       ├── api/          # API 调用
+│       ├── assets/       # 静态资源
+│       ├── components/   # 公共组件
+│       ├── router/       # 路由配置
+│       └── views/        # 页面视图
+├── scripts/              # 脚本工具
+│   ├── port_utils.py     # 端口工具
+│   ├── test_data_generator.py  # 测试数据生成
+│   └── simulation_test.py     # 模拟测试
+└── data/                 # 数据目录
+    └── test/             # 测试数据
+```
+
+## API 接口
+
+| 方法 | 路径 | 描述 |
+|------|------|------|
+| GET | `/api/v1/health` | 健康检查 |
+| POST | `/api/v1/stocks/quote/realtime` | 实时行情 |
+| POST | `/api/v1/stocks/kline` | K 线数据 |
+| POST | `/api/v1/indicators/calculate` | 计算指标 |
+| POST | `/api/v1/backtest/run` | 运行回测 |
+| POST | `/api/v1/strategy/list` | 策略列表 |
+| GET | `/api/v1/funds/list` | 基金列表 |
+
+完整 API 文档: http://localhost:8000/docs
+
+## 策略说明
+
+### MACD 策略
+- 金叉买入，死叉卖出
+- 参数: 快线周期、慢线周期、信号线周期
+
+### KDJ 策略
+- 超卖买入，超买卖出
+- 参数: K 周期、D 周期、J 周期
+
+### 布林带策略
+- 价格触及下轨买入，上轨卖出
+- 参数: 周期、标准差倍数
+
+### 均值回归策略
+- 价格偏离均值过大时反向操作
+- 参数: 回归周期、偏离阈值
+
+## 技术栈
+
+### 后端
+- **FastAPI**: 高性能 Web 框架
+- **Pandas**: 数据处理
+- **NumPy**: 数值计算
+- **AKShare**: 金融数据
+- **PyEcharts**: 图表生成
+
+### 前端
+- **Vue 3**: 渐进式框架
+- **Vite**: 构建工具
+- **ECharts**: 图表库
+- **Vue-Echarts**: Vue 封装
+- **Pinia**: 状态管理
+- **Vue Router**: 路由管理
+
+### 机器学习
+- **TensorFlow/Keras**: 深度学习
+- **XGBoost**: 梯度提升
+- **Prophet**: 时间序列
+
+## 页面预览
+
+- **首页**: 市场概览、快捷入口
+- **股票**: 搜索、详情、图表
+- **基金**: 列表、净值、筛选
+- **回测**: 策略配置、绩效分析
+- **预测**: ML 模型、趋势预测
+- **监控**: 系统状态、安全告警
+- **预警**: 自定义规则、通知管理
+
+## 配置说明
+
+### 环境变量
+
+| 变量 | 默认值 | 描述 |
+|------|--------|------|
+| PORT | 8000 | API 服务端口 |
+| HOST | 0.0.0.0 | 服务地址 |
+
+### 端口检测
+
+服务启动时自动检测端口可用性，如端口被占用会自动切换到下一个可用端口。
+
+## 开发指南
+
+### 添加新的数据源
+
+```python
+from wealth.data.base import BaseDataSource
+
+class MyDataSource(BaseDataSource):
+    async def get_realtime(self, symbol: str):
+        # 实现数据获取逻辑
+        pass
+```
+
+### 添加新策略
+
+```python
+from wealth.engine.strategies import Strategy
+
+class MyStrategy(Strategy):
+    def __init__(self):
+        super().__init__("my_strategy")
+
+    def generate_signals(self, data):
+        # 实现信号生成逻辑
+        pass
+```
+
+### 添加新的 ML 模型
+
+```python
+from wealth.ml.predictor import BasePredictor
+
+class MyPredictor(BasePredictor):
+    def predict(self, data):
+        # 实现预测逻辑
+        pass
+```
+
+## 贡献指南
 
 1. Fork 本仓库
 2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
 3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送分支 (`git push origin feature/AmazingFeature`)
-5. 开启Pull Request
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 创建 Pull Request
 
-## 📄 开源协议
+## License
 
-本项目基于 MIT 协议开源 - 详见 [LICENSE](LICENSE)
+本项目采用 MIT 许可证 - 参见 [LICENSE](LICENSE) 文件
 
-## 🙏 致谢
+## 致谢
 
-- [CryptoJS](https://github.com/brix/crypto-js) - 加密算法库
-- [GSAP](https://greensock.com/gsap/) - 动画引擎
-- [Tailwind CSS](https://tailwindcss.com/) - CSS框架
-- [Font Awesome](https://fontawesome.com/) - 图标库
-
----
-
-<p align="center">
-  <strong>CIPHER NEXUS</strong><br>
-  密码枢纽 · 数据核心
-</p>
+- [AKShare](https://github.com/akfamily/akshare) - 金融数据源
+- [PyEcharts](https://github.com/pyecharts/pyecharts) - Python 图表库
+- [ECharts](https://github.com/apache/echarts) - 数据可视化库
+- [Vue-Echarts](https://github.com/ecomfe/vue-echarts) - Vue 图表组件
