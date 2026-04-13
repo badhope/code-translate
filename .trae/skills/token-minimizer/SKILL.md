@@ -1,6 +1,6 @@
 ---
 name: "token-minimizer"
-description: "An interesting experiment in extreme token efficiency. 20x compression, <2% perf loss. Just for fun and saving money. Invoke when user says '抠门', wants to save tokens, cut AI costs, or optimize prompts."
+description: "An interesting experiment in extreme token efficiency. 20x compression, <2% perf loss. Bilingual EN/CN. Just for fun and saving money. Invoke when user says '抠门', wants to save tokens, cut AI costs, or optimize prompts."
 ---
 
 <div align="center">
@@ -11,32 +11,41 @@ description: "An interesting experiment in extreme token efficiency. 20x compres
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Made with AI](https://img.shields.io/badge/Made%20with-AI-blue.svg?style=flat-square)](https://github.com/badhope/token-minimizer-Skill)
-[![Self-Optimizing](https://img.shields.io/badge/Self-Optimizing-✓-purple.svg?style=flat-square)](#-self-optimization)
+[![Bilingual](https://img.shields.io/badge/Bilingual-EN%20%2F%20CN-orange.svg?style=flat-square)](#)
+[![Self-Optimizing](https://img.shields.io/badge/Self--Optimizing-✓-purple.svg?style=flat-square)](#-unique-features)
+
+---
+
+### 🌍 Choose your language / 选择语言
+
+[**English** 🇬🇧](#english) • [**中文** 🇨🇳](#中文)
+
+---
 
 **An interesting experiment in extreme token efficiency. Every Token Counts.**
 
-[English](#english) • [中文](#中文) • [Features](#-unique-features)
+**一个有趣的极致token效率实验。抠到每一个token。**
 
 </div>
 
 ---
 
-## 🚀 Unique Features
+## 🚀 Unique Features / 独有特性
 
-### 🧘 Self-Optimization
-This skill **compresses itself**. The SKILL.md you're reading is already 42% smaller than version 1. It bootstraps.
+### 🧘 Self-Optimization / 自举优化
+This skill **compresses itself**. SKILL.md is 42% smaller than v1. It bootstraps.
 
-### 📊 Real-time Metrics
-Automatically calculates compression ratio on every response. Shows:
-- Input tokens saved
-- Output tokens saved
-- Performance impact score
+这个skill自己压缩自己。SKILL.md已经比v1小了42%，自举优化。
 
-### 🎯 Smart Budget Allocation
-Dynamic token budgeting by task complexity:
-- **Simple tasks**: Max compression, min output
-- **Complex tasks**: Balance compression + reasoning
-- **Code tasks**: Variable minification only
+### 📊 Real-time Metrics / 实时指标
+- Input tokens saved / 输入token节省
+- Output tokens saved / 输出token节省
+- Performance impact score / 性能影响分数
+
+### 🎯 Smart Budget Allocation / 智能预算
+- **Simple tasks / 简单**: Max compression / 极限压缩
+- **Complex tasks / 复杂**: Balanced compression + reasoning / 平衡压缩+推理
+- **Code tasks / 代码**: Variable minification only / 仅变量精简
 
 ---
 
@@ -135,7 +144,7 @@ Max token compression, minimal performance loss.
 
 <div align="center">
 
-## 🤝 Contributing
+## 🤝 Contributing / 贡献
 
 MIT License • Open Source • PRs Welcome
 
