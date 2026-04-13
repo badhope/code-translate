@@ -2,15 +2,15 @@
 
 # 💰 Token Minimizer • 抠门 Skill
 
-[![GitHub stars](https://img.shields.io/github/stars/badhope/token-minimizer?style=flat-square)](https://github.com/badhope/token-minimizer)
+[![GitHub stars](https://img.shields.io/github/stars/badhope/token-minimizer-Skill?style=flat-square)](https://github.com/badhope/token-minimizer-Skill)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Made with AI](https://img.shields.io/badge/Made%20with-AI-blue.svg?style=flat-square)](https://github.com/badhope/token-minimizer)
 [![Trae Skills](https://img.shields.io/badge/Trae-Skill-green.svg?style=flat-square)](.trae/skills/token-minimizer)
 
-### 🏆 World's #1 Token Efficiency Skill
+### 💰 Token Minimizer • 抠门 Skill
 
-**Research-Backed. Production-Proven. Every Token Counts.**
+**An interesting experiment in extreme token efficiency. Every Token Counts.**
 
 [English](#english) • [中文](#中文)
 
@@ -28,9 +28,9 @@
 
 ### 🎯 What is Token Minimizer?
 
-Token Minimizer (aka "抠门 Skill") is the world's most advanced token optimization framework for LLMs. It achieves **20x compression with <2% performance loss** using research-backed methods from top AI labs.
+Token Minimizer (aka "抠门 Skill") is an LLM token optimization experiment. It achieves **20x compression with <2% performance loss** using research-backed methods from top AI labs. Just for fun, and for saving your hard-earned money.
 
-> "Extreme frugality is the highest form of engineering." — Anonymous
+> "Being stingy with tokens is the highest form of engineering." — Some engineer, probably
 
 ### 🔬 Research Backing
 
@@ -63,9 +63,9 @@ Token Minimizer (aka "抠门 Skill") is the world's most advanced token optimiza
 
 ### 🎯 什么是抠门Skill？
 
-**抠门Skill**是全球最先进的LLM token优化框架。基于顶级AI实验室的研究成果，实现**20倍压缩，性能损失<2%**。
+**抠门Skill**是一个有趣的LLM token省钱实验。基于顶级AI实验室的研究成果，实现**20倍压缩，性能损失<2%**。纯为好玩，顺便省钱。
 
-> "抠到极致就是艺术。" — 每一个省钱的工程师
+> "抠到极致就是艺术。" — 某个不想给OpenAI送钱的工程师
 
 ### 🔬 学术背书
 
@@ -114,7 +114,7 @@ MIT License • Open Source • PRs Welcome
 
 **Star ⭐ this repo if it saves you money!**
 
-[GitHub](https://github.com/badhope/token-minimizer) • [Report Bug](https://github.com/badhope/token-minimizer/issues) • [Request Feature](https://github.com/badhope/token-minimizer/issues)
+[GitHub](https://github.com/badhope/token-minimizer-Skill) • [Report Bug](https://github.com/badhope/token-minimizer-Skill/issues) • [Request Feature](https://github.com/badhope/token-minimizer-Skill/issues)
 
 **Made with 💸 by badhope team**
 

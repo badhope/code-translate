@@ -1,19 +1,19 @@
 ---
 name: "token-minimizer"
-description: "🏆 World's #1 Token Efficiency Skill. 20x compression, <2% perf loss. Self-optimizing, research-backed. Invoke when user says '抠门', wants to save tokens, cut AI costs, or optimize prompts."
+description: "An interesting experiment in extreme token efficiency. 20x compression, <2% perf loss. Just for fun and saving money. Invoke when user says '抠门', wants to save tokens, cut AI costs, or optimize prompts."
 ---
 
 <div align="center">
 
 # 💰 Token Minimizer • 抠门 Skill
 
-[![GitHub stars](https://img.shields.io/github/stars/badhope/token-minimizer?style=flat-square)](https://github.com/badhope/token-minimizer)
+[![GitHub stars](https://img.shields.io/github/stars/badhope/token-minimizer-Skill?style=flat-square)](https://github.com/badhope/token-minimizer-Skill)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-[![Made with AI](https://img.shields.io/badge/Made%20with-AI-blue.svg?style=flat-square)](https://github.com/badhope/token-minimizer)
+[![Made with AI](https://img.shields.io/badge/Made%20with-AI-blue.svg?style=flat-square)](https://github.com/badhope/token-minimizer-Skill)
 [![Self-Optimizing](https://img.shields.io/badge/Self-Optimizing-✓-purple.svg?style=flat-square)](#-self-optimization)
 
-**Research-Backed. Production-Proven. Every Token Counts.**
+**An interesting experiment in extreme token efficiency. Every Token Counts.**
 
 [English](#english) • [中文](#中文) • [Features](#-unique-features)
 
@@ -141,6 +141,6 @@ MIT License • Open Source • PRs Welcome
 
 **Star ⭐ this repo if it saves you money!**
 
-[GitHub](https://github.com/badhope/token-minimizer) • [Issues](https://github.com/badhope/token-minimizer/issues)
+[GitHub](https://github.com/badhope/token-minimizer-Skill) • [Issues](https://github.com/badhope/token-minimizer-Skill/issues)
 
 </div>
